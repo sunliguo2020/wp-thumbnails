@@ -8,8 +8,7 @@
 
 ### Function: Add Custom Fields
 
-//add_action('publish_post', 'update_wp_thumbnails_meta_action');
-//add_action('save_post', 'update_wp_thumbnails_meta_action'); 
+add_action('save_post', 'update_wp_thumbnails_meta_action');
 add_action('wp_head', 'update_wp_thumbnails_meta');
 
 		
@@ -20,9 +19,16 @@ function delete_thumbnail_fields($post_ID) {
 	//以及删除该文章的缩略图
 }
 
-//function update_wp_thumbnails_meta_action() {
-	//update_wp_thumbnails_meta("", true);
-//}
+function update_wp_thumbnails_meta_action($post_id) {
+	// 防止自动保存和修订版本时触发
+	if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+	if (wp_is_post_revision($post_id)) return;
+	
+	$post = get_post($post_id);
+	if (!$post || $post->post_status != 'publish') return;
+	
+	update_wp_thumbnails_meta($post);
+}
 
 function update_wp_thumbnails_meta($post="", $from_action=false) // 自动填充自定义域
 {
