@@ -27,7 +27,8 @@ function update_wp_thumbnails_meta_action($post_id) {
 	$post = get_post($post_id);
 	if (!$post || $post->post_status != 'publish') return;
 	
-	update_wp_thumbnails_meta($post);
+	// 强制从后台更新，绕过 is_single() 检查
+	update_wp_thumbnails_meta($post, true);
 }
 
 function update_wp_thumbnails_meta($post="", $from_action=false) // 自动填充自定义域
@@ -37,14 +38,10 @@ function update_wp_thumbnails_meta($post="", $from_action=false) // 自动填充
 	$auto_replace_exception	= $wp_thumbnails_options['auto_replace_exception']; //排除
 	$limit 						= $wp_thumbnails_options['limit'];
 	
-	if($auto_replace=="true") {
+	if($auto_replace=="true" && !$from_action) {
 		if(!is_single() && !is_page())	return; //确保只在single页或page页执行，以免页面卡住打不开。
 		$limit = 20; //无穷大，确保所有图片都被本地化
 	}
-	
-	//if ($from_action===true &&(!is_admin() || $wp_thumbnails_options['auto_recheck']=='false')) {
-		//return;
-	//}
 	
 	if($post=="") {
 		global $post;
@@ -63,7 +60,7 @@ function update_wp_thumbnails_meta($post="", $from_action=false) // 自动填充
 	/****************************************************/
 	
 			
-	if ($thumbnail == '' or strstr($thumbnail,'NoPicturesFound')) {//若字段尚未填充，升级为NoMediaFound
+	if ($thumbnail == '' or strstr($thumbnail,'NoPicturesFound') or strstr($thumbnail,'NoMediaFound')) {//若字段尚未填充，升级为NoMediaFound
 		
 		//获取年、月
 		global $wpdb;
