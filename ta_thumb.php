@@ -118,8 +118,7 @@ function ta_load_image( $file ) {//直接由url获得
 	@ini_set('memory_limit', '256M');
 	$image = imagecreatefromstring( file_get_contents( $file ) );//用来将文件的内容读入到一个字符串
 
-	if ( !is_resource( $image ) ) {//检测变量是否为资源类型
-		echo "The file is not an image: ".$file;
+	if ( $image === false ) {//检测变量是否为资源类型
 		return false;
 	}
 

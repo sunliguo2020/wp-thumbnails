@@ -30,9 +30,13 @@ function wp_thumbnails_for_smart_homepage ($args = '')
 		$album_by_sql
 		";
 		
-		$resultset = @mysql_query($sql, $wpdb->dbh);
-		$row = @mysql_fetch_array($resultset);
-		$thumbnail = $row['meta_value'];
+		$resultset = $wpdb->get_results($sql, ARRAY_A);
+		if (is_array($resultset) && count($resultset) > 0) {
+			$row = $resultset[0];
+			$thumbnail = $row['meta_value'];
+		} else {
+			$thumbnail = '';
+		}
 		$array = explode(";", $thumbnail);
 		$iNumberOfPics = count($array)-1; // 图片数量 
 		
@@ -166,7 +170,7 @@ function get_wp_thumbnails_for_homepage ($args = '')
 	  $args2['crop'] 			= $wp_thumbnails_options['crop_home_images'];
 	
 		$args = wp_parse_args($args, $args2);//合并参数，若args中无某参数，则以默认参数args2代替
-		$post_preview_id = $args['id'];
+		$post_preview_id = isset($args['id']) ? $args['id'] : '';
 				
 		$wp_thumbnails_options['width_of_home_images'] 	= $args['width'];
 	  $wp_thumbnails_options['height_of_home_images'] = $args['height'];
@@ -230,6 +234,9 @@ function get_wp_thumbnails_for_homepage ($args = '')
 	else {	
 		$array = explode(";", $thumbnail);
 		$iNumberOfPics = count($array)-1; // 图片数量 
+		if ($iNumberOfPics <= 0) {
+			return;
+		}
 		if ($rand_pic_from == "first") { 	//选取第一张图片
 			$seq = 0;
 		}

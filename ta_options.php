@@ -1576,11 +1576,10 @@ function wp_thumbnails_for_homepage_preview()
 	ORDER BY post_id DESC
 	LIMIT 1";
 	
-	$result = @mysql_query($sql, $wpdb->dbh);
-	$number = @mysql_num_rows($result);
-	if ($number == 1)
+	$result = $wpdb->get_results($sql, ARRAY_A);
+	if (is_array($result) && count($result) == 1)
 	{
-		$row = mysql_fetch_array($result);
+		$row = $result[0];
 		$post_id = $row['post_id'];
 		$post = get_post($post_id);
 		$post_content = "wp-thumbnails-preview".$post->post_content;

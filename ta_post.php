@@ -262,6 +262,7 @@ function wp_thumbnails_for_single_post ($args = ''){
   $sort_images_randomly = false; //无效参数
 	$category_filter_way  = "none";  //无效参数 single post不过滤分类
   $category_filter  		= "";  //无效参数 single post不过滤分类
+  $thumb = ""; //初始化thumb变量
 
 
 	$output = get_wp_thumbnails_for_post($media, $thumb, $number, $thumbsize, $height, $target, $sort_images_randomly, $category_filter_way,  $category_filter, "single", $show_title, $nofollow, $link_target, $pic_interval, $title_pos, $wrap);
@@ -545,8 +546,8 @@ function get_wp_thumbnails_for_post ($media = "",
 					LIMIT $number
 					";
 					
-					$related_resultset = @mysql_query($sql, $wpdb->dbh);
-					$related_num = @mysql_num_rows($related_resultset);
+					$related_resultset = $wpdb->get_results($sql, ARRAY_A);
+					$related_num = is_array($related_resultset) ? count($related_resultset) : 0;
 			
 					if (($related_num < $number) && ($releated_fill == "true")) { // 补全随机缩略图
 						//排除相关日志，以免重复
@@ -554,7 +555,7 @@ function get_wp_thumbnails_for_post ($media = "",
 						$postlist = "'" . $post->ID. "'";
 						while ($image_count++ < $related_num)
 						{	
-							$row = mysql_fetch_array($related_resultset);
+							$row = $related_resultset[$image_count - 1];
 							$post_id = $row['post_id'];
 							$postlist = $postlist . ", '" . $post_id . "'";
 						}
@@ -690,15 +691,17 @@ function get_wp_thumbnails_for_post ($media = "",
 			 	}
 	}
 
-	$resultset = @mysql_query($sql, $wpdb->dbh);
-	$image_number = min($number,@mysql_num_rows($resultset));
+	$resultset = $wpdb->get_results($sql, ARRAY_A);
+	$image_number = is_array($resultset) ? count($resultset) : 0;
+	$image_number = min($number, $image_number);
 	if($articles == "single") { $image_number = min($image_number,1); } //single只需要一个记录
 	$image_count = 0;
 	$output = '';
+	$single_position = ''; //初始化变量，防止在非single模式下使用时报错
 
 	while ($image_count++ < $image_number)
 	{
-		$row = mysql_fetch_array($resultset);
+		$row = $resultset[$image_count - 1];
 		$post_id = $row['post_id'];
 		
 		//获取年、月
@@ -1012,8 +1015,9 @@ function get_wp_thumbnails_for_post ($media = "",
 			
 			
 			if (($releated_fill == "true") && ($articles == "related") && ($image_count == $image_number) && ($related_num < $number)) {
-				$resultset = @mysql_query($sql_related, $wpdb->dbh);
-				$image_number = min($extra_num,@mysql_num_rows($resultset));
+				$resultset = $wpdb->get_results($sql_related, ARRAY_A);
+				$image_number = is_array($resultset) ? count($resultset) : 0;
+				$image_number = min($extra_num, $image_number);
 				$image_count = 0;
 				$articles = "none"; //防止死循环
 			}

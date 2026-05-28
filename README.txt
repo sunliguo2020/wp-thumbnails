@@ -2,6 +2,18 @@
 
 (请到插件主页查看你使用的是否是最新版本)
 
+3.2.3
+
+修复 PHP 8+ 兼容性问题：
+
+- 修复 ta_thumb.php 中 is_resource() 在 PHP 8+ 中失效的问题（GD 返回 GdImage 对象而非 resource）
+- 修复 ta_homepage.php 中 mysql_query/mysql_fetch_array 替换为 $wpdb
+- 修复 ta_options.php 中 mysql_query/mysql_num_rows/mysql_fetch_array 替换为 $wpdb
+- 修复 ta_post.php 中所有 mysql_* 函数替换为 $wpdb
+- 修复 ta_post.php 中未定义变量 $thumb 和 $single_position
+- 修复 ta_excerpt.php 中 strstr() 和 str_replace() 传入 null 参数的弃用警告
+- 修复 ta_homepage.php 中未定义数组键 "id" 和 mt_rand() ValueError
+
 3.2.2
 
 修复当原图和缩略图宽度一样大时，不能正确提取缩略图的问题。

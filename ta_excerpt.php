@@ -84,7 +84,7 @@ function wp_thumbnails_excerpt($content, $description=false, $length=0, $ignore=
 	}
 	
 	$options = get_option('thumbnails_anywhere_options');
-	if($options['auto_excerpt']!="true" && !strstr($content, "wp-thumbnails-preview")) //预览时强制摘要
+	if($options['auto_excerpt']!="true" && ($content === null || !strstr($content, "wp-thumbnails-preview"))) //预览时强制摘要
 		return $content;
 	
 	if($length==0) {
@@ -99,7 +99,7 @@ function wp_thumbnails_excerpt($content, $description=false, $length=0, $ignore=
 		$clear = "<div class=\"clear-float\"></div>
 		";
 	
-	if(!strstr($content, "wp-thumbnails-preview") && $ignore==false) { //后台预览
+	if($content !== null && !strstr($content, "wp-thumbnails-preview") && $ignore==false) { //后台预览
 		//兼容已有摘要
 		global $post;
 		$content = $post->post_excerpt;
@@ -111,7 +111,13 @@ function wp_thumbnails_excerpt($content, $description=false, $length=0, $ignore=
 			$content = $post->post_content;
 		}
 	}
-	$content = str_replace(']]>', ']]&gt;', $content);
+	
+	// 确保$content是字符串，防止null传递给str_replace
+	if ($content === null) {
+		$content = '';
+	}
+	
+	$content = str_replace(']]>', ']]>', $content);
 	$content = strip_shortcodes($content); //去掉短代码
 	$content = trim($content);
 
