@@ -162,6 +162,7 @@ function get_wp_thumbnails_for_homepage ($args = '')
 	$wp_thumbnails_options = get_option('thumbnails_anywhere_options');
 	
 	//只允许传递参数：宽、高、位置、裁剪
+	$post_preview_id = '';
 	if(!empty($args)) {
 		$args2 = array();	  
 	  $args2['width'] 		= $wp_thumbnails_options['width_of_home_images'];
@@ -198,10 +199,12 @@ function get_wp_thumbnails_for_homepage ($args = '')
 	
 	if($post_preview_id) { //后台预览
 		$post = get_post($post_preview_id);
+		if (!$post || !isset($post->ID)) return;
 		$post_id = $post_preview_id;
 	}
 	else {
 		global $post;
+		if (!$post || !isset($post->ID)) return;
 		$post_id = $post->ID;
 	}
 	
