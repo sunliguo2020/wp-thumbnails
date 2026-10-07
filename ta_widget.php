@@ -4,7 +4,7 @@
 * 侧边栏
 */
 function widget_sidebar_ta_random() {
-	if ( !function_exists('register_sidebar_widget') || !function_exists('register_widget_control') )
+	if ( !function_exists('wp_register_sidebar_widget') || !function_exists('wp_register_widget_control') )
 		return;
 
 	function widget_ta_random($args) {
@@ -24,7 +24,8 @@ function widget_sidebar_ta_random() {
 		echo $after_widget;
 	}
 
-	register_sidebar_widget('随机缩略图', 'widget_ta_random');
+	$widget_id = sanitize_title('随机缩略图');
+	wp_register_sidebar_widget($widget_id, '随机缩略图', 'widget_ta_random');
 	
 	function widget_ta_random_options() {			
 		$ta_random_options = $new_ta_random_options = get_option('widget_ta_random'); //获取数据库中的 widget_ta_random
@@ -42,14 +43,14 @@ function widget_sidebar_ta_random() {
 <?php
 	}
 	
-	register_widget_control('随机缩略图', 'widget_ta_random_options', 300, 90);
+	wp_register_widget_control($widget_id, '随机缩略图', 'widget_ta_random_options', array('width' => 300, 'height' => 90));
 }
 
 add_action('plugins_loaded', 'widget_sidebar_ta_random');
 
 
 function widget_sidebar_ta_recent() {
-	if ( !function_exists('register_sidebar_widget') || !function_exists('register_widget_control') )
+	if ( !function_exists('wp_register_sidebar_widget') || !function_exists('wp_register_widget_control') )
 		return;
 
 	function widget_ta_recent($args) {
@@ -69,7 +70,8 @@ function widget_sidebar_ta_recent() {
 		echo $after_widget;
 	}
 
-	register_sidebar_widget('最新缩略图', 'widget_ta_recent');
+	$widget_id = sanitize_title('最新缩略图');
+	wp_register_sidebar_widget($widget_id, '最新缩略图', 'widget_ta_recent');
 	
 	function widget_ta_recent_options() {			
 		$ta_recent_options = $new_ta_recent_options = get_option('widget_ta_recent'); //获取数据库中的 widget_ta_recent
@@ -87,13 +89,13 @@ function widget_sidebar_ta_recent() {
 <?php
 	}
 	
-	register_widget_control('最新缩略图', 'widget_ta_recent_options', 300, 90);
+	wp_register_widget_control($widget_id, '最新缩略图', 'widget_ta_recent_options', array('width' => 300, 'height' => 90));
 }
 
 add_action('plugins_loaded', 'widget_sidebar_ta_recent');
 
 function widget_sidebar_ta_related() {
-	if ( !function_exists('register_sidebar_widget') || !function_exists('register_widget_control') )
+	if ( !function_exists('wp_register_sidebar_widget') || !function_exists('wp_register_widget_control') )
 		return;
 
 	function widget_ta_related($args) {
@@ -113,7 +115,8 @@ function widget_sidebar_ta_related() {
 		echo $after_widget;
 	}
 
-	register_sidebar_widget('相关缩略图', 'widget_ta_related');
+	$widget_id = sanitize_title('相关缩略图');
+	wp_register_sidebar_widget($widget_id, '相关缩略图', 'widget_ta_related');
 	
 	function widget_ta_related_options() {			
 		$ta_related_options = $new_ta_related_options = get_option('widget_ta_related'); //获取数据库中的 widget_ta_related
@@ -131,14 +134,14 @@ function widget_sidebar_ta_related() {
 <?php
 	}
 	
-	register_widget_control('相关缩略图', 'widget_ta_related_options', 300, 90);
+	wp_register_widget_control($widget_id, '相关缩略图', 'widget_ta_related_options', array('width' => 300, 'height' => 90));
 }
 
 add_action('plugins_loaded', 'widget_sidebar_ta_related');
 
 
 function widget_sidebar_ta_popular() {
-	if ( !function_exists('register_sidebar_widget') || !function_exists('register_widget_control') )
+	if ( !function_exists('wp_register_sidebar_widget') || !function_exists('wp_register_widget_control') )
 		return;
 
 	function widget_ta_popular($args) {
@@ -158,7 +161,8 @@ function widget_sidebar_ta_popular() {
 		echo $after_widget;
 	}
 
-	register_sidebar_widget('最热门缩略图', 'widget_ta_popular');
+	$widget_id = sanitize_title('最热门缩略图');
+	wp_register_sidebar_widget($widget_id, '最热门缩略图', 'widget_ta_popular');
 	
 	function widget_ta_popular_options() {			
 		$ta_popular_options = $new_ta_popular_options = get_option('widget_ta_popular'); //获取数据库中的 widget_ta_popular
@@ -176,7 +180,7 @@ function widget_sidebar_ta_popular() {
 <?php
 	}
 	
-	register_widget_control('最热门缩略图', 'widget_ta_popular_options', 300, 90);
+	wp_register_widget_control($widget_id, '最热门缩略图', 'widget_ta_popular_options', array('width' => 300, 'height' => 90));
 }
 
 add_action('plugins_loaded', 'widget_sidebar_ta_popular');
