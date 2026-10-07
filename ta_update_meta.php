@@ -426,6 +426,8 @@ function wp_thumbnails_get_vedio_thumbs($content) {
 	$head = "ta_video_";
 	$result = "";
 	
+	$flashvar = "";
+	$imageurl = "";
 	if(strstr($content,'youku.com')) { //图像大小：128*96
 		//优酷视频地址，如http://player.youku.com/player.php/sid/XMTAxNjk4OTMy/v.swf
 		//或者网页地址：http://v.youku.com/v_show/id_XMTAxNjk4OTMy.html
@@ -472,6 +474,8 @@ function wp_thumbnails_get_vedio_thumbs($content) {
 	}
 	
 	
+	$flashvar = "";
+	$imageurl = "";
 	if(strstr($content,'ku6.com')) { //图像大小：132*99
 		// http://v.ku6.com/show/sPysxoPI8pe51o5c.html
 		// http://player.ku6.com/refer/sPysxoPI8pe51o5c/v.swf
@@ -508,6 +512,8 @@ function wp_thumbnails_get_vedio_thumbs($content) {
 		return $result;
 	}
 	
+	$flashvar = "";
+	$imageurl = "";
 	if(strstr($content,'tudou.com')){ //图像大小：120*90
 		//http://www.tudou.com/programs/view/_ke1lzCnBYw/
 		//http://www.tudou.com/v/_ke1lzCnBYw/v.swf
