@@ -886,7 +886,7 @@ function wp_thumbnails_configuration_page()
 
 
     foreach ($categories as $category) {
-        print "<label style='display:block;' for='category-$category->cat_ID'><input type='checkbox' value='$category->cat_ID' name='category_filter[]' id='category-$category->cat_ID'" . (in_array( $category->cat_ID, $wp_thumbnails_options["category_filter"] ) ? ' checked="checked"' : "") . " />" .  wp_specialchars($category->cat_name) . "</label>\n";
+        print "<label style='display:block;' for='category-$category->cat_ID'><input type='checkbox' value='$category->cat_ID' name='category_filter[]' id='category-$category->cat_ID'" . (in_array( $category->cat_ID, $wp_thumbnails_options["category_filter"] ) ? ' checked="checked"' : "") . " />" . esc_html($category->cat_name) . "</label>\n";
     }
 ?>
 </div>
