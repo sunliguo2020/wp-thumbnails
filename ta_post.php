@@ -1048,7 +1048,7 @@ function get_wp_thumbnails_for_post ($media = "",
 	}
 	
 	if ($output) {
-		if($title_pos == "bottom" || $title_pos == "top") {
+		if($title_pos == "bottom" || $title_pos == "top" || $title_pos == "right" || $title_pos == "left") {
 			$output = "<div id=\"ta-post\" class=\"clearfix\">
 			".$output."
 			</div>
