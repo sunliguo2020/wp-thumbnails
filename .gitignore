@@ -1,0 +1,70 @@
+default/
+# PHP 编译缓存
+*.log
+*.tmp
+*.swp
+*.swo
+.cache/
+.phpunit.result.cache
+
+# Composer
+vendor/
+composer.lock
+
+# 环境配置（重要！不要提交密钥、数据库账号）
+.env
+.env.local
+.env.*.local
+
+# 编辑器IDE
+.idea/
+.vscode/
+*.user
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# 操作系统文件
+.DS_Store
+Thumbs.db
+
+# Nginx/Apache 临时文件
+*.pid
+*.sock
+
+# 缓存目录
+cache/
+tmp/
+temp/
+logs/
+
+# 上传文件（资源目录，按需取舍）
+uploads/
+
+# ====== WordPress 专用（你现在的项目是WP，保留这段） ======
+# WP核心一般不提交，如果你是开发主题/插件，下面按需启用
+# wp-admin/
+# wp-includes/
+wp-config.php
+wp-content/cache/
+wp-content/uploads/
+wp-content/upgrade/
+wp-content/backup-db/
+wp-content/backups/
+wp-content/blogs.dir/
+wp-content/meta/
+wp-content/plugins/*
+!wp-content/plugins/index.php
+!wp-content/plugins/【你的自定义插件目录】/
+
+wp-content/themes/*
+!wp-content/themes/index.php
+!wp-content/themes/【你的自定义主题目录】/
+
+# WP日志
+wp-content/debug.log
+
+# WP多站点
+wp-content/sites/
