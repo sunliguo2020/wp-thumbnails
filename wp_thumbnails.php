@@ -59,7 +59,7 @@ $downloadpath = $rooturl.$downloadDir;
 
 add_action('init', 'ta_init_textdomain');
 function ta_init_textdomain(){
-  load_plugin_textdomain('wp_thumbnails',"wp-content/plugins/wp-thumbnails");
+  load_plugin_textdomain('wp_thumbnails');
 }
 
 if(!file_exists($uploadpath)) { 

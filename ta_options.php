@@ -7,7 +7,7 @@
 function wp_thumbnails_add_page()
 { 
     //在后台options添加wp_thumbnails, 使用函数wp_thumbnails_configuration_page生成后台设置页面。
-    add_options_page('wp_thumbnails', __('WP-Thumbnails','wp_thumbnails'), 8, __FILE__, 'wp_thumbnails_configuration_page');
+    add_options_page('wp_thumbnails', __('WP-Thumbnails','wp_thumbnails'), 'manage_options', __FILE__, 'wp_thumbnails_configuration_page');
 }
 add_action('admin_menu', 'wp_thumbnails_add_page');
 
