@@ -652,12 +652,34 @@ function wp_thumbnails_configuration_page()
     else if (isset($_POST['submit']))
     {        
 				// 过滤分类和标签
-        if (!is_array($_POST['category_filter']))
+        if (!isset($_POST['category_filter']) || !is_array($_POST['category_filter']))
         {
             $_POST['category_filter'] = array();
         }
 
-        
+        $checkbox_options = array(
+            'auto_home',
+            'auto_category',
+            'auto_tag_page',
+            'auto_search',
+            'auto_excerpt',
+            'auto_random',
+            'auto_related',
+            'auto_single',
+            'auto_replace',
+        );
+        foreach ($checkbox_options as $option_name) {
+            if (!isset($_POST[$option_name])) {
+                $_POST[$option_name] = 'false';
+            }
+        }
+
+        foreach ($wp_thumbnails_options as $option_name => $option_value) {
+            if (!array_key_exists($option_name, $_POST)) {
+                $_POST[$option_name] = $option_value;
+            }
+        }
+
         // 创建选项的数组
         $wp_thumbnails_options = array(
     		    "number_of_smart_homepage"	=> $_POST['number_of_smart_homepage'], 
