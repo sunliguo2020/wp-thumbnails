@@ -48,6 +48,8 @@ function update_wp_thumbnails_meta($post="", $from_action=false) // 自动填充
 	}
 	global $siteurl;
 	
+	if (!($post instanceof WP_Post)) return;
+
 	if ($post->post_type == 'revision' || $post->post_status != 'publish') { 
     return;//不能对修订版进行更新，否则造成数据库重复条目;也不对未发表日志进行更新
   }
